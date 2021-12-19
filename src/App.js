@@ -1,25 +1,53 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import Home from './components/pages/Home';
+import Login from './components/pages/Login';
+import Header from './components/Header';
+import Leaderboard from './components/pages/Leaderboard';
+import NewQuestion from './components/pages/NewQuestion';
 
-function App() {
+import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Question from './components/pages/Question';
+import { useEffect } from 'react';
+import { handleGetUsers } from './redux/actions/users';
+import { connect } from 'react-redux';
+import { handleGetQuestions } from './redux/actions/questions';
+import NotFound from './components/pages/NotFound';
+
+function App(props) {
+  const { dispatch, authedUser } = props;
+
+  useEffect(() => {
+    dispatch(handleGetUsers())
+    dispatch(handleGetQuestions())
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='app'>
+      <Router>
+        <Header />
+          <Routes>
+            {authedUser == null ? <Route exact path="*" element={<Login />}/> :
+            <>
+              <Route exact path="/" element={<Home/>}/>
+              <Route exact path="/login" element={<Login/>}/>
+              <Route exact path="/leaderboard" element={<Leaderboard/>}/>
+              <Route exact path="/add" element={<NewQuestion dispatch={dispatch}/>}/>
+              <Route exact path="/question/:question_id" element={<Question/>}/>
+              <Route path="*" element={<NotFound />}/>
+            </>
+          }
+          </Routes>
+      </Router>
     </div>
   );
 }
 
-export default App;
+function mapStateToProps({authedUser}, props){
+  return {
+    authedUser,
+    ...props,
+  }
+}
+
+export default connect(mapStateToProps)(App)

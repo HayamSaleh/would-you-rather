@@ -1,0 +1,15 @@
+export const GET_INITAL_DATA = 'GET_INITAL_DATA';
+
+export const GET_USERS = 'GET_USERS';
+export const ADD_USER = 'ADD_USER';
+
+export const SET_AUTHORIZED_USER = 'SET_AUTHORIZED_USER';
+export const LOG_OUT = 'LOG_OUT';
+
+export const GET_QUESTIONS = 'GET_QUESTIONS';
+export const ADD_QUESTION = 'ADD_QUESTION';
+export const ADD_USER_QUESTION = 'ADD_USER_QUESTION';
+
+
+export const ADD_QUESTION_ANSWER = 'ADD_QUESTION_ANSWER';
+export const ADD_USER_ANSWER = 'ADD_USER_ANSWER';
