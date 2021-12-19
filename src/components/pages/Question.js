@@ -34,7 +34,7 @@ function Question(props){
   const handleSubmit = (question_id, answer) => {
     setAnswered(!answered);
     setQuestion(
-      {...question, [answer]: {...[answer],
+      {...question, [answer]: {...question[answer],
        votes: [...question[answer].votes, authedUser]}}
     )
     dispatch(handleSaveQuestionAnswer(question_id, answer))
